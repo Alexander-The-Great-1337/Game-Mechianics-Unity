@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float timePowerupLasts = 7.0f;
     [SerializeField] private GameObject powerupIndicator;
 
+    public bool gameOver = false;
+
     private Rigidbody rb;
 
     public bool hasPower;
@@ -24,7 +26,12 @@ public class PlayerController : MonoBehaviour
         float fowardInput = Input.GetAxis("Vertical");
         rb.AddForce(fowardInput * speed * focalPoint.transform.forward);
 
-        powerupIndicator.transform.position = new(transform.position.x, -0.5f, transform.position.z);
+        powerupIndicator.transform.position = new(transform.position.x, (transform.position.y - 0.5f), transform.position.z);
+
+        if (transform.position.y < -10)
+        {
+            gameOver = true;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
